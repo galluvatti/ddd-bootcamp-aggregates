@@ -2,7 +2,7 @@ import express from 'express';
 import { pool } from '../data-access/db';
 import { FleetUnit } from '../model/fleet-unit';
 import { FleetUnitsDAL } from '../data-access/fleet-units-dal';
-import { FleetUnits } from '../app/fleet-units';
+import { FleetUnits } from '../application/fleet-units';
 
 export const router = express.Router();
 

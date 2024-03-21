@@ -1,4 +1,4 @@
-export class CabinLayout {
+export class LegacyCabinLayout {
     constructor(
         public layoutId: string,
         public width: number,

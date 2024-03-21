@@ -1,14 +1,14 @@
 import { Pool } from "pg";
 import { CabinLayoutsDAL } from "../data-access/cabin-layouts-dal";
-import { CabinLayout } from "../model/cabin-layout";
+import { LegacyCabinLayout } from "../model/legacy-cabin-layout";
 
-export class CabinLayouts {
+export class LegacyCabinLayouts {
     constructor(
         public dal: CabinLayoutsDAL,
         public pool: Pool
     ) { }
 
-    async getAll(): Promise<CabinLayout[]> {
+    async getAll(): Promise<LegacyCabinLayout[]> {
         try {
             const result = await this.dal.getCabinLayouts();
             return result;
@@ -17,20 +17,20 @@ export class CabinLayouts {
         }
     }
 
-    async get(id: string): Promise<CabinLayout | null> {
+    async get(id: string): Promise<LegacyCabinLayout | null> {
         return await this.dal.getCabinLayoutById(id);
     }
 
-    async create(cabinLayout: CabinLayout): Promise<CabinLayout> {
+    async create(cabinLayout: LegacyCabinLayout): Promise<LegacyCabinLayout> {
         if (!await this.isLayoutValid(cabinLayout)) {
             throw new Error("Invalid layout");
         }
 
-        await this.dal.createCabinLayout(cabinLayout);
+        await this.dal.legacyCreateCabinLayout(cabinLayout);
         return cabinLayout;
     }
 
-    async update(cabinLayout: CabinLayout): Promise<CabinLayout> {
+    async update(cabinLayout: LegacyCabinLayout): Promise<LegacyCabinLayout> {
         if (!await this.isLayoutValid(cabinLayout)) {
             throw new Error("Invalid layout");
         }
@@ -39,7 +39,7 @@ export class CabinLayouts {
         return cabinLayout;
     }
 
-    async isLayoutValid(layout: CabinLayout): Promise<boolean> {
+    async isLayoutValid(layout: LegacyCabinLayout): Promise<boolean> {
         if (layout.rows.find(row => row.seatGroups.length <= 1)) {
             return false;
         }
