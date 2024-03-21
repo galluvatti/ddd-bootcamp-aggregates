@@ -18,7 +18,7 @@ export class LegacyCabinLayouts {
     }
 
     async get(id: string): Promise<LegacyCabinLayout | null> {
-        return await this.dal.getCabinLayoutById(id);
+        return await this.dal.getLegacyCabinLayoutById(id);
     }
 
     async create(cabinLayout: LegacyCabinLayout): Promise<LegacyCabinLayout> {
@@ -35,7 +35,7 @@ export class LegacyCabinLayouts {
             throw new Error("Invalid layout");
         }
 
-        await this.dal.updateCabinLayout(cabinLayout);
+        await this.dal.legacyUpdateCabinLayout(cabinLayout);
         return cabinLayout;
     }
 

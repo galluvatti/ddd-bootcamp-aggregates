@@ -1,6 +1,7 @@
 import {CabinLayoutRepository} from "../../domain/cabin-layouts/cabin-layout-repository";
 import {CabinLayout} from "../../domain/cabin-layouts/cabin-layout";
 import {CabinLayoutsDAL} from "../../data-access/cabin-layouts-dal";
+import {CabinLayoutId} from "../../domain/cabin-layouts/cabin-layout-id";
 
 export class PostgresCabinLayoutRepository implements CabinLayoutRepository {
 
@@ -10,9 +11,16 @@ export class PostgresCabinLayoutRepository implements CabinLayoutRepository {
         this.dal = dal;
     }
 
-    async save(cabinLayout: CabinLayout): Promise<void> {
+    async save(cabinLayout: CabinLayout) {
         await this.dal.createCabinLayout(cabinLayout);
-        return Promise.resolve(undefined);
+    }
+
+    async update(cabinLayout: CabinLayout) {
+        await this.dal.updateCabinLayout(cabinLayout);
+    }
+
+    async load(aggregateId: CabinLayoutId): CabinLayout {
+        return await this.dal.getLegacyCabinLayoutById(aggregateId)
     }
 
 }

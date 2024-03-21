@@ -6,21 +6,20 @@ import {Seat} from "./seat";
 
 export class CabinLayout {
     public readonly id: CabinLayoutId;
-    private version: number;
+    public version: number;
 
     private width: number = 0;
     private length: number = 0;
     private status: CabinLayoutStatus = CabinLayoutStatus.Draft;
-    private rows: Row[];
-
-
-   getVersion(): number {
-        return this.version;
-    }
+    private rows: Row[] = [];
 
     constructor(id: CabinLayoutId, version: number = 0) {
         this.id = id;
         this.version = version;
+    }
+
+   getVersion(): number {
+        return this.version;
     }
 
     execute(command: CabinLayoutCommand) {
@@ -43,6 +42,9 @@ export class CabinLayout {
     }
 
     private assignSeatMap(seatMap: Row[]) {
+        if(this.status !== CabinLayoutStatus.Draft) {
+            throw new Error("Only Cabin in Draft status can be modified");
+        }
         this.rows = seatMap;
     }
 }

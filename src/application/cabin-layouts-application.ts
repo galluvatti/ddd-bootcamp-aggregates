@@ -20,8 +20,7 @@ export class CabinLayoutsApplicationService {
 
             if (command.type === CommandType.InitCabinLayout) {
                 await this.repository.save(cabinLayout);
-            }
-            else await this.repository.update(cabinLayout);
+            } else await this.repository.update(cabinLayout);
 
             return this.toSuccessResult(command, cabinLayout);
         } catch (error: any) {
@@ -34,7 +33,7 @@ export class CabinLayoutsApplicationService {
         if (command.type === CommandType.InitCabinLayout) {
             return new CabinLayout(command.aggregateId);
         } else {
-            throw Error("Command not supported")
+            return this.repository.load(command.aggregateId)
         }
     }
 
